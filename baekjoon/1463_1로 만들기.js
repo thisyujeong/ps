@@ -11,7 +11,7 @@ while (num > 1) {
   else if (num % 2 === 0) num /= 2;
   else num -= 1;
 }
-console.log(calc(num));
+console.log(num);
 */
 
 /* 
