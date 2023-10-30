@@ -50,5 +50,3 @@ for (let i = 0; i < n; i++) {
   }
 }
 console.log(Math.max(...dp));
-
-console.log(dp);
