@@ -75,4 +75,51 @@ function merge(arr, tmp, start, mid, end) {
 
 console.log(mergeSort(array, tmpArray, 0, N - 1)[K - 1]);
 
-/* TODO: 풀이 4 - 힙 정렬 */
+/* 풀이 4 - 힙 정렬 (메모리 526016, 시간 4960ms) */
+function heapSort(heap) {
+  // 먼저 전체 트리 구조를 최대 힙 구조로 바꿈
+  for (let i = 1; i < heap.length; i++) {
+    let curr = i;
+    while (curr > 0) {
+      let root = Math.floor((curr - 1) / 2); // 부모노드 찾기
+      if (heap[root] < heap[curr]) {
+        let tmp = heap[root];
+        heap[root] = heap[curr];
+        heap[curr] = tmp;
+      }
+      curr = root;
+    }
+  }
+
+  // 크기를 줄여가며 반복적으로 힙을 구성
+  for (let i = heap.length - 1; i >= 0; i--) {
+    // 루트 노드(가장 큰 값)와 가장 마지막에 위치한 원소의자리를 교체
+    // => 자연스럽게 오름차순 정렬이 이루어짐
+    let tmp = heap[0];
+    heap[0] = heap[i];
+    heap[i] = tmp;
+
+    let root = 0;
+    let curr = 1;
+
+    while (curr < i) {
+      curr = 2 * root + 1; // 자식 노드 (왼쪽 자식 노드)
+
+      // 자식 중 더 큰 값 찾기 (오른쪽 값이 더 크다면 heap[curr + 1])
+      if (heap[curr] < heap[curr + 1] && curr < i - 1) {
+        curr++;
+      }
+      // 루트보다 자식이 더 크다면 교환
+      if (heap[root] < heap[curr] && curr < i) {
+        let tmp = heap[root];
+        heap[root] = heap[curr];
+        heap[curr] = tmp;
+      }
+
+      root = curr;
+    }
+  }
+  return heap;
+}
+
+console.log(heapSort(array)[K - 1]);
