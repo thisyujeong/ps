@@ -22,7 +22,7 @@ console.log(result);
  * 다른 사람 풀이 분석
  * 배열을 이용하여 글자 수 대로 while 반복문을 실행함
  * 배열의 뒤에서부터 3번(3비트이므로) pop하여 8진법으로 변환
- * 나의 풀이(316ms)로 비교했을 때 메모리와, 속도가 크게 단축됨 (320ms -> 280ms)
+ * 나의 풀이(316ms)로 비교했을 때 속도가 크게 단축됨 (320ms -> 280ms)
  * 하지만 메모리는 소모량은 늘어남 (36744kb -> 43328kb)
  */
 var s = require('fs').readFileSync('./input.txt').toString().trim().split('');
