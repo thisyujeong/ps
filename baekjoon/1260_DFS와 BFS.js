@@ -31,8 +31,7 @@ function BFS(graph, v, visited) {
 
   // queue의 길이가 0이 될때까지 반복
   while (queue.length) {
-    // queue에서 첫번째 노드 꺼냄
-    let x = queue.shift();
+    let x = queue.shift(); // queue에서 첫번째 노드 꺼냄
 
     // 해당 노드를 방문한 적이 없을 경우
     if (!visited[x]) {
@@ -42,10 +41,10 @@ function BFS(graph, v, visited) {
       // 꺼낸 노드와 인접한 노드들 길이 만큼 반복
       for (let i = 0; i < graph[x].length; i++) {
         let next = graph[x][i]; // 다음 방문할 노드 (꺼낸 노드와 인접한 노드)
+
+        // 다음 노드를 방문한적 없을 경우
         if (!visited[next]) {
-          // 다음 노드를 방문한적 없을 경우
           queue.push(next); // 해당 노드를 방문할 노드 목록인 queue에 삽입
-          // visited[x] = true; // 다음에 방문할 노드 큐에 삽입
         }
       }
     }
