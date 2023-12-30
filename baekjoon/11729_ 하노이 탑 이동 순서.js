@@ -1,6 +1,7 @@
 /**
- * 다음 글 참고
+ * 다음 글, 영상 참고
  * https://nyang-in.tistory.com/210
+ * https://www.youtube.com/watch?v=FYCGV6F1NuY
  * 원반이 이동하는 순서를 이해하는데 어려움이 있었음
  *
  * 맨 아래 원반을 목적지로 이동시킴
