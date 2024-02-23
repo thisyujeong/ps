@@ -3,13 +3,11 @@ const [t, ...input] = fs.readFileSync('./input.txt').toString().trim().split('\n
 let visited = [];
 let changed = [];
 
-/**
- * 소수 판별하는 함수
- */
+/* 소수 판별하는 함수  */
 function isPrime(n) {
   // 자연수의 제곱근 이하의 수까지 검사하면 검사 범위를 줄일 수 있음
-  for (let i = 2; i < Math.sqrt(n); i++) {
-    if (n % i === 0) return false;
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i == 0) return false;
   }
   return true;
 }
@@ -56,5 +54,5 @@ input.forEach((tc) => {
   visited = new Array(10000).fill(0); // 방문처리 초기화
   changed = new Array(10000).fill(-1); // 변경횟수 초기화
   bfs(from, to);
-  console.log(changed[to] < -1 ? 'Impossible' : changed[to]);
+  console.log(changed[to] == -1 ? 'Impossible' : changed[to]);
 });
