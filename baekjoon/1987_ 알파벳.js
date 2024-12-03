@@ -20,7 +20,7 @@ let answer = 0;
 function dfs(r, c, cnt) {
   answer = Math.max(answer, cnt);
   for (let i = 0; i < 4; i++) {
-    const [nr, nc] = [r + dy[0], c + dc];
+    const [nr, nc] = [r + dy[i], c + dx[i]];
     if (nr >= 0 && nc >= 0 && nr < R && nc < C) {
       if (!visited[board[nr][nc]]) {
         visited[board[nr][nc]] = true;
