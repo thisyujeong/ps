@@ -1,5 +1,4 @@
 /**
- * TODO: 실행시간 개선
  * 최대 64개의 공간, 바이러스 최소 2개
  * 빈 공간은 최대 62개
  *
@@ -10,6 +9,7 @@
 const input = require('fs').readFileSync('./input.txt').toString().trim().split('\n');
 const [n, m] = input.shift().split(' ').map(Number); // n: 세로, m: 가로 (3 <= n, m <= 8)
 const map = input.map((l) => l.split(' ').map(Number));
+const temp = [...new Array(n)].map(() => new Array(m).fill(0));
 const dir = [
   [0, 1],
   [0, -1],
@@ -17,7 +17,81 @@ const dir = [
   [-1, 0],
 ];
 
+const selected = [];
 let answer = 0;
+
+// dfs
+const dfs = (row, col) => {
+  temp[row][col] = 2; // 바이러스
+  for (let [dx, dy] of dir) {
+    const [nx, ny] = [dx + col, dy + row];
+    if (nx < 0 || ny < 0 || nx >= m || ny >= n) continue;
+    if (temp[ny][nx] !== 0) continue;
+    dfs(ny, nx);
+  }
+};
+
+// 바이러스 체크
+const viruesCheck = () => {
+  // map 복제
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      temp[i][j] = map[i][j];
+    }
+  }
+  // 선택된 3개의 조합(벽))
+  for (let i = 0; i < 3; i++) {
+    const index = selected[i];
+    const row = Math.floor(index / m);
+    const col = index % m;
+    temp[row][col] = 1;
+  }
+
+  // 바이러스 퍼트리기
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (temp[i][j] !== 2) continue;
+      dfs(i, j);
+    }
+  }
+
+  // 감염되지 않은 연구소 개수 구하기
+  let count = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (temp[i][j] !== 0) continue;
+      count++;
+    }
+  }
+
+  if (answer < count) answer = count;
+};
+
+// 조합 백트래킹
+const combination = (index) => {
+  // 벽 3 개 조합 -> dfs 실행하여 바이러스 퍼트림
+  if (selected.length === 3) {
+    viruesCheck();
+    return;
+  }
+
+  for (let i = index; i < n * m; i++) {
+    const row = Math.floor(i / m);
+    const col = i % m;
+
+    if (map[row][col] !== 0) continue; // 빈칸(연구소)이 아니면
+    selected.push(i);
+    combination(i + 1);
+    selected.pop();
+  }
+};
+
+combination(0);
+console.log(answer);
+
+// bfs는 실행할때마다 temp 배열을 새로 만들기때문에 위 방식에 비해
+// 실행시간이 길어지고 메모리도 많이 차지한다.
+/* let answer = 0;
 function bfs() {
   const queue = [];
   const temp = map.map((line) => [...line]); // copy
@@ -70,5 +144,5 @@ function setWall(count) {
 }
 
 setWall(0);
-
 console.log(answer);
+ */
