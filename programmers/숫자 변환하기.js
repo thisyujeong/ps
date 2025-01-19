@@ -34,3 +34,59 @@ function solution(x, y, n) {
   }
   return -1;
 }
+
+/* bfs 시간초과 개선 (queue 구현) */
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+  get size() {
+    return this.length;
+  }
+  push(value) {
+    const node = new Node(value);
+    if (this.length === 0) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      this.tail.next = node;
+      this.tail = node;
+    }
+    this.length++;
+  }
+  shift() {
+    const first = this.head.value;
+    this.head = this.head.next;
+    this.length--;
+
+    return first;
+  }
+}
+
+function solution(x, y, n) {
+  let result = -1;
+  const q = new Queue();
+  q.push([y, 0]);
+
+  while (q.length !== 0) {
+    const [value, step] = q.shift();
+    if (value <= x) {
+      if (value === x) result = step;
+      break;
+    }
+
+    if (value - n >= x) q.push([value - n, step + 1]);
+    if (value % 2 === 0 && value / 2 >= x) q.push([value / 2, step + 1]);
+    if (value % 3 === 0 && value / 3 >= x) q.push([value / 3, step + 1]);
+  }
+
+  return result;
+}
