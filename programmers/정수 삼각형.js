@@ -27,3 +27,23 @@ function solution(triangle) {
     }, [])
   );
 }
+
+// 효율성 테스트 - 시간초과 풀이
+function solution(triangle) {
+  const len = triangle.length;
+  const memo = Array.from({ length: len }, (_, i) =>
+    Array.from({ length: i + 1 }, () => 0)
+  );
+
+  for (let i = 0; i < len - 1; i++) {
+    for (let j = 0; j < triangle[i].length; j++) {
+      const left = Math.max(memo[i + 1][j], memo[i][j] + triangle[i + 1][j]);
+      const right = Math.max(memo[i + 1][j + 1], memo[i][j] + triangle[i + 1][j + 1]);
+
+      memo[i + 1][j] = left;
+      memo[i + 1][j + 1] = right;
+    }
+  }
+
+  return Math.max(...memo[len - 1]);
+}
